@@ -1,0 +1,52 @@
+SELECT  * FROM `sqlcsv.youtubeproject.Alexdata` 
+where title_name like '%SQL%'
+
+
+SELECT  * FROM `sqlcsv.youtubeproject.Alexdata` 
+order by views desc
+
+
+SELECT  *, (likes/views) as likesratio
+FROM `sqlcsv.youtubeproject.Alexdata` 
+order by likesratio desc
+
+
+SELECT  distinct yearmonth
+
+ FROM `sqlcsv.youtubeproject.Alexdata`
+
+
+SELECT  case when title_name like '%ython%' then 'Python'
+ when title_name like '%SQL%' then 'SQL'
+ when title_name like '%ablea%' then 'Tableau'
+ when title_name like '%xcel%' then 'Excel'
+ when title_name like '%ower%' then 'Power BI'
+else 'other' end as type,count(*)
+ FROM `sqlcsv.youtubeproject.Alexdata`
+group by type
+
+
+SELECT  yearmonth,count(*)
+ FROM `sqlcsv.youtubeproject.Alexdata`
+group by yearmonth
+order by count(*) desc
+
+
+SELECT  yearmonth,sum(views)
+ FROM `sqlcsv.youtubeproject.Alexdata`
+group by yearmonth
+having sum(views)>1000000
+order by yearmonth
+
+
+with final as (
+SELECT  yearmonth,sum(views) as totalviews
+ FROM `sqlcsv.youtubeproject.Alexdata`
+where year=2020 and month in (10,11)
+group by yearmonth
+order by yearmonth desc)
+select yearmonth, totalviews,lag(totalviews) over (order by yearmonth desc)
+from final
+
+
+
